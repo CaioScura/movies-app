@@ -1,6 +1,15 @@
-.movie-card{
-    color: #fff;
+.loading-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 72px);
 }
-.movie-overview{
-    color: #ccc;
+
+.movie-list{
+    padding: 24px 3%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    width: 100%;
 }

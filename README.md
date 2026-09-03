@@ -6,7 +6,6 @@ Aplicacao web para descobrir filmes populares em portugues do Brasil, consumindo
 
 ![Tela principal do Filmes Caiote](public/preview.png)
 
-
 ## Funcionalidades
 
 - Listagem de filmes descoberta pela API do TMDB.

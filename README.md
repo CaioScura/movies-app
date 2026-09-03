@@ -6,7 +6,6 @@ Aplicacao web para descobrir filmes populares em portugues do Brasil, consumindo
 
 ![Tela principal do Filmes Caiote](public/preview.png)
 
-> A imagem acima e opcional. Adicione um screenshot em `public/preview.png` quando quiser exibir uma previa do projeto no GitHub.
 
 ## Funcionalidades
 

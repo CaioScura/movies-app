@@ -2,6 +2,10 @@
 
 Aplicacao web para descobrir filmes populares em portugues do Brasil, consumindo dados da [API do TMDB](https://developer.themoviedb.org/reference/discover-movie). O projeto apresenta posters, titulos, sinopses resumidas e avaliacoes convertidas para estrelas.
 
+#Referência
+Utilizei o vídeo abaixo como referência de estudo
+https://www.youtube.com/watch?v=ZxZy4LhXlE0&list=PLvBZEbHj4kDs5pOLmxj3ofKV7NTHA3DgM&index=41&t=3s
+
 ## Preview
 
 ![Tela principal do Filmes Caiote](public/preview.png)

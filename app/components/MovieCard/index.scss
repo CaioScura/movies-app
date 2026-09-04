@@ -42,21 +42,12 @@
             height: 0;
             opacity: 0;
 
-            .movie-button{
-                background-color: #1e293b;
-                color: #f1f5f9;
-                border: none;
-                padding: 0.5rem 1rem;
-                border-radius: 4px;
-                margin-top: 0.5rem;
-                width: 100%;
-
-                &:hover{
-                    background-color: #334155;
-                    cursor: pointer;
-                }
-            }
         }
+
+        .btn-default{
+            width: 100%;
+        }
+
     }
 
     &:hover{

@@ -36,7 +36,7 @@ export function MovieCard(props: Props) {
                     }
                     
 
-                    <button className="movie-button">
+                    <button className="btn-default">
                         Ver mais
                     </button>
 

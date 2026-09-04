@@ -5,5 +5,12 @@
     .page-title{
         color: #fff;
         font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .icon-movie{
+        font-size: 2rem;
+        margin-right: 10px;
     }
 }

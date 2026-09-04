@@ -1,10 +1,24 @@
-*{
+* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
-body{
+body {
     background-color: #020617;
     font-family: 'Poppins', sans-serif;
+
+    .btn-default {
+        background-color: #1e293b;
+        color: #f1f5f9;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+
+        &:hover {
+            background-color: #334155;
+            cursor: pointer;
+        }
+    }
 }

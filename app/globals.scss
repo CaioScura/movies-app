@@ -4,9 +4,15 @@
     margin: 0;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     background-color: #020617;
     font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow-x: hidden;
 
     .btn-default {
         background-color: #1e293b;
@@ -20,5 +26,37 @@ body {
             background-color: #334155;
             cursor: pointer;
         }
+    }
+}
+
+//fundo de vidro fosco com blur e saturacao, usado no destaque do poster da pagina
+.page-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+
+    &__image {
+        position: absolute;
+        // margem extra pra nao sobrar borda vazia depois do blur + zoom
+        inset: -40px;
+        background-size: cover;
+        background-position: center;
+        filter: blur(60px) saturate(1.2);
+        transform: scale(1.15);
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+
+        &.is-visible {
+            opacity: 1;
+        }
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        // reforca o contraste com o conteudo e mantem a paleta escura do app
+        background: linear-gradient(180deg, rgba(2, 6, 23, 0.75), rgba(2, 6, 23, 0.92));
     }
 }

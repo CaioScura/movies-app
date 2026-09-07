@@ -7,9 +7,16 @@ import { getAnimes } from "@/app/service/jikan/anime";
 import { MediaCard } from "../MediaCard";
 import PaginationList from "../PaginationList";
 
-export default function AnimeList({ searchQuery }: { searchQuery: string }) {
+interface AnimeListProps {
+    searchQuery: string;
+    // avisa a tela sobre o poster em destaque atual, pra usar como fundo em vidro fosco
+    onBackdropChange?: (image: string | null) => void;
+}
+
+export default function AnimeList({ searchQuery, onBackdropChange }: AnimeListProps) {
     const [animes, setAnimes] = useState<Media[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [hasError, setHasError] = useState<boolean>(false);
 
     //para criacao de paginas com mais animes
     const [page, setPage] = useState(1);
@@ -28,6 +35,7 @@ export default function AnimeList({ searchQuery }: { searchQuery: string }) {
 
     const loadAnimes = async () => {
         setIsLoading(true);
+        setHasError(false);
 
         try{
             // toda a montagem da url e chamada a api ficou no service
@@ -38,9 +46,14 @@ export default function AnimeList({ searchQuery }: { searchQuery: string }) {
 
             //salvar o total de paginas disponiveis na api
             setTotalPages(response.totalPages);
+
+            //atualiza o poster de fundo com o destaque da pagina atual
+            onBackdropChange?.(response.results[0]?.image ?? null);
         }
         catch (error) {
             console.error('Erro ao buscar animes:', error);
+            setAnimes([]);
+            setHasError(true);
         }
         finally {
             setIsLoading(false);
@@ -62,6 +75,15 @@ export default function AnimeList({ searchQuery }: { searchQuery: string }) {
                         animation: 'movie-list-spinner 0.8s linear infinite',
                     }}
                 />
+            </div>
+        )
+    }
+
+    if (hasError) {
+        return (
+            <div className="error-container">
+                <p>Não foi possível carregar os animes. Tente novamente.</p>
+                <button type="button" onClick={loadAnimes}>Tentar novamente</button>
             </div>
         )
     }

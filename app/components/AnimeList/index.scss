@@ -5,6 +5,31 @@
     min-height: calc(100vh - 72px);
 }
 
+.error-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    min-height: calc(100vh - 72px);
+    text-align: center;
+    padding: 0 24px;
+    color: #fff;
+
+    button{
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        background: #6046ff;
+        color: #fff;
+        cursor: pointer;
+
+        &:hover{
+            background: #5f46ffb4;
+        }
+    }
+}
+
 .movie-list{
     padding: 24px 3%;
     display: grid;

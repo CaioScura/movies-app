@@ -8,7 +8,13 @@ import { MediaCard } from "../MediaCard";
 import PaginationList from "../PaginationList";
 
 
-export default function MovieList({ searchQuery }: { searchQuery: string }) {
+interface MovieListProps {
+    searchQuery: string;
+    // avisa a tela sobre o poster em destaque atual, pra usar como fundo em vidro fosco
+    onBackdropChange?: (image: string | null) => void;
+}
+
+export default function MovieList({ searchQuery, onBackdropChange }: MovieListProps) {
     const [movies, setMovies] = useState<Media[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -42,6 +48,9 @@ export default function MovieList({ searchQuery }: { searchQuery: string }) {
 
             //salvar o total de paginas disponiveis na api
             setTotalPages(response.totalPages);
+
+            //atualiza o poster de fundo com o destaque da pagina atual
+            onBackdropChange?.(response.results[0]?.image ?? null);
         }
         catch (error) {
             console.error('Erro ao buscar filmes:', error);

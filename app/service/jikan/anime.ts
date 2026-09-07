@@ -49,10 +49,11 @@ export async function getAnimes(page: number, query?: string): Promise<GetAnimes
     const response = await axios<JikanAnimeResponse>({
         method: 'get',
         url: isSearching ? `${BASE_URL}/anime` : `${BASE_URL}/top/anime`,
+        timeout: 10000, // corta a espera em 10s em vez de travar o loading indefinidamente
         params: {
             page,
             sfw: true, // filtra para nao pegar conteudo adulto
-            ...(isSearching ? { q: query } : { order_by: 'popularity', sort: 'asc' }),
+            ...(isSearching ? { q: query } : {}), // <-- aqui, sem order_by/sort
         },
     });
 

@@ -7,7 +7,13 @@ import { getTvShows } from "@/app/service/tmdb/tv";
 import { MediaCard } from "../MediaCard";
 import PaginationList from "../PaginationList";
 
-export default function TvList({ searchQuery }: { searchQuery: string }) {
+interface TvListProps {
+    searchQuery: string;
+    // avisa a tela sobre o poster em destaque atual, pra usar como fundo em vidro fosco
+    onBackdropChange?: (image: string | null) => void;
+}
+
+export default function TvList({ searchQuery, onBackdropChange }: TvListProps) {
     const [tvs, setTvs] = useState<Media[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -38,6 +44,9 @@ export default function TvList({ searchQuery }: { searchQuery: string }) {
 
             //salvar o total de paginas disponiveis na api
             setTotalPages(response.totalPages);
+
+            //atualiza o poster de fundo com o destaque da pagina atual
+            onBackdropChange?.(response.results[0]?.image ?? null);
         }
         catch (error) {
             console.error('Erro ao buscar series de tv:', error);

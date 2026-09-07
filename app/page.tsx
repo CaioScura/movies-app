@@ -1,3 +1,7 @@
+"use client";
+
+import React, { useState } from "react";
+import Navbar from "./components/NavBar";
 import MovieList from "./components/MovieList";
 import '@fontsource/poppins/400.css'; // Regular
 import '@fontsource/poppins/700.css'; // Bold 
@@ -5,12 +9,29 @@ import TvList from "./components/TvList";
 
 
 export default function Home() {
-  return (
-    <div>
-      <MovieList />
+  const [activeTab, setActiveTab] = useState<"movies" | "tv">("movies");
 
-      <TvList />
-      
-    </div>
+  return (
+    <>
+      <Navbar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+
+      <main>
+        {activeTab === "movies" && (
+          <div className="movies-container">
+            <MovieList />
+          </div>
+        )}
+
+        {activeTab === "tv" && (
+          <div className="tv-container">
+            <TvList />
+          </div>
+        )}
+      </main>
+    </>
+
   );
 }

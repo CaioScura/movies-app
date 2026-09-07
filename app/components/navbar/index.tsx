@@ -1,15 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import "./index.scss";
 import { BiCameraMovie } from "react-icons/bi";
-import searchBar from "../SearchBar";
 import SearchBar from "../SearchBar";
 
 
 interface NavbarProps {
-    activeTab: "movies" | "tv";
-    setActiveTab: (tab: "movies" | "tv") => void;
+    activeTab: "movies" | "tv" | "anime";
+    setActiveTab: (tab: "movies" | "tv" | "anime") => void;
     onSearch: (query: string) => void;
 }
 
@@ -40,8 +38,8 @@ export default function Navbar({ activeTab, setActiveTab, onSearch }: NavbarProp
                 </button>
 
                 <button
-                    className={`btn-abas ${activeTab === "tv" ? "active" : ""}`}
-                    onClick={() => setActiveTab("tv")}
+                    className={`btn-abas ${activeTab === "anime" ? "active" : ""}`}
+                    onClick={() => setActiveTab("anime")}
                 >
                     Animes
                 </button>

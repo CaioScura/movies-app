@@ -6,10 +6,11 @@ import MovieList from "./components/MovieList";
 import '@fontsource/poppins/400.css'; // Regular
 import '@fontsource/poppins/700.css'; // Bold 
 import TvList from "./components/TvList";
+import AnimeList from "./components/AnimeList";
 
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<"movies" | "tv">("movies");
+  const [activeTab, setActiveTab] = useState<"movies" | "tv" | "anime">("movies");
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -30,6 +31,12 @@ export default function Home() {
         {activeTab === "tv" && (
           <div className="tv-container">
             <TvList searchQuery={searchQuery}/>
+          </div>
+        )}
+
+        {activeTab === "anime" && (
+          <div className="anime-container">
+            <AnimeList searchQuery={searchQuery}/>
           </div>
         )}
       </main>

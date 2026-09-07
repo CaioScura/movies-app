@@ -1,15 +1,14 @@
 'use client';
 
-import axios from "axios";
 import "./index.scss";
 import { useEffect, useState } from "react";
-import { Tv } from "@/app/types/tv";
-import { MovieCard } from "../MovieCard";
+import { Media } from "@/app/types/media";
+import { getTvShows } from "@/app/service/tmdb/tv";
+import { MediaCard } from "../MediaCard";
 import PaginationList from "../PaginationList";
-import { TvCard } from "../TvCard";
 
 export default function TvList({ searchQuery }: { searchQuery: string }) {
-    const [tvs, setTvs] = useState<Tv[]>([]);
+    const [tvs, setTvs] = useState<Media[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     //para criacao de paginas com mais series de tv
@@ -23,35 +22,22 @@ export default function TvList({ searchQuery }: { searchQuery: string }) {
 }, [searchQuery]);
 
     useEffect(() => {
-        getTvs();
+        loadTvShows();
     }, [page, searchQuery]);
         
 
-    const getTvs = async () => {
+    const loadTvShows = async () => {
         setIsLoading(true);
 
         try{
-            //pesquisa de series de tv na api, caso o usuario digite algo na barra de pesquisa
-            const isSearching = searchQuery.trim().length > 0;
-
-            const response = await axios({
-                method: 'get',
-                url: isSearching
-                    ? 'https://api.themoviedb.org/3/search/tv'
-                    : 'https://api.themoviedb.org/3/discover/tv',
-                params: {
-                    api_key: '87eb939d5c4b4ce27aa6a9e4221b8629',
-                    language: 'pt-BR',
-                    page: page,
-                    ...(isSearching ? { query: searchQuery } : {})
-                }
-            });
+            // toda a montagem da url e chamada a api ficou no service
+            const response = await getTvShows(page, searchQuery);
 
             //popular a listagem de series de tv
-            setTvs(response.data.results);
+            setTvs(response.results);
 
             //salvar o total de paginas disponiveis na api
-            setTotalPages(response.data.total_pages);
+            setTotalPages(response.totalPages);
         }
         catch (error) {
             console.error('Erro ao buscar series de tv:', error);
@@ -82,9 +68,9 @@ export default function TvList({ searchQuery }: { searchQuery: string }) {
 
     return(
             <><ul className="movie-list">
-                    {tvs.map((tv) => <TvCard
+                    {tvs.map((tv) => <MediaCard
                         key={tv.id}
-                        tv={tv} />
+                        media={tv} />
     
                     )}
                 </ul>

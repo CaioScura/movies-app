@@ -19,6 +19,10 @@ export default function TvList({ searchQuery }: { searchQuery: string }) {
     const [totalpages, setTotalPages] = useState(1);
 
     useEffect(() => {
+    setPage(1);
+}, [searchQuery]);
+
+    useEffect(() => {
         getTvs();
     }, [page, searchQuery]);
         
@@ -27,14 +31,19 @@ export default function TvList({ searchQuery }: { searchQuery: string }) {
         setIsLoading(true);
 
         try{
+            //pesquisa de series de tv na api, caso o usuario digite algo na barra de pesquisa
+            const isSearching = searchQuery.trim().length > 0;
+
             const response = await axios({
                 method: 'get',
-                url: 'https://api.themoviedb.org/3/discover/tv',
+                url: isSearching
+                    ? 'https://api.themoviedb.org/3/search/tv'
+                    : 'https://api.themoviedb.org/3/discover/tv',
                 params: {
                     api_key: '87eb939d5c4b4ce27aa6a9e4221b8629',
                     language: 'pt-BR',
                     page: page,
-                    query: searchQuery || undefined
+                    ...(isSearching ? { query: searchQuery } : {})
                 }
             });
 

@@ -20,6 +20,9 @@ export default function MovieList({ searchQuery }: { searchQuery: string }) {
     //total de paginas disponiveis na api
     const [totalpages, setTotalPages] = useState(1);
 
+    useEffect(() => {
+        setPage(1);
+    }, [searchQuery]);
 
     useEffect(() => {
         getMovies();
@@ -29,14 +32,21 @@ export default function MovieList({ searchQuery }: { searchQuery: string }) {
         setIsLoading(true);
 
         try{
+            //pesquisa de filmes na api, caso o usuario digite algo na barra de pesquisa
+            const isSearching = searchQuery.trim().length > 0;
+
+
             const response = await axios({
                 method: 'get',
-                url: 'https://api.themoviedb.org/3/discover/movie',
+                url: isSearching
+                ? 'https://api.themoviedb.org/3/search/movie'
+                : 'https://api.themoviedb.org/3/discover/movie',
+                
                 params: {
                     api_key: '87eb939d5c4b4ce27aa6a9e4221b8629',
                     language: 'pt-BR',
                     page: page,
-                    query: searchQuery || undefined
+                    ...(isSearching ? { query: searchQuery } : {})
                 }
             });
 

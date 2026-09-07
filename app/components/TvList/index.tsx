@@ -8,7 +8,7 @@ import { MovieCard } from "../MovieCard";
 import PaginationList from "../PaginationList";
 import { TvCard } from "../TvCard";
 
-export default function TvList() {
+export default function TvList({ searchQuery }: { searchQuery: string }) {
     const [tvs, setTvs] = useState<Tv[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -20,7 +20,7 @@ export default function TvList() {
 
     useEffect(() => {
         getTvs();
-    }, [page]);
+    }, [page, searchQuery]);
         
 
     const getTvs = async () => {
@@ -33,7 +33,8 @@ export default function TvList() {
                 params: {
                     api_key: '87eb939d5c4b4ce27aa6a9e4221b8629',
                     language: 'pt-BR',
-                    page: page
+                    page: page,
+                    query: searchQuery || undefined
                 }
             });
 

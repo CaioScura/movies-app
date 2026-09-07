@@ -8,19 +8,22 @@ import { MovieCard } from "../MovieCard";
 import PaginationList from "../PaginationList";
 
 
-export default function MovieList() {
+export default function MovieList({ searchQuery }: { searchQuery: string }) {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
 
     //para criacao de paginas com maios filmes
     const [page, setPage] = useState(1);
 
+
     //total de paginas disponiveis na api
     const [totalpages, setTotalPages] = useState(1);
 
+
     useEffect(() => {
         getMovies();
-    }, [page]); // requisição da api sera chamada apenas uma vez, quando o componente for montado
+    }, [page, searchQuery]); // requisição da api sera chamada apenas uma vez, quando o componente for montado
 
     const getMovies = async () => {
         setIsLoading(true);
@@ -32,7 +35,8 @@ export default function MovieList() {
                 params: {
                     api_key: '87eb939d5c4b4ce27aa6a9e4221b8629',
                     language: 'pt-BR',
-                    page: page
+                    page: page,
+                    query: searchQuery || undefined
                 }
             });
 

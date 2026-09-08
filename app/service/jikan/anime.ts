@@ -14,7 +14,19 @@ interface JikanAnime {
             large_image_url: string;
         };
     };
+    year: number | null;
+    status: string | null;
+    episodes: number | null;
+    duration: string | null;
+    genres: { name: string }[];
 }
+
+// status da Jikan traduzido pra pt-BR
+const STATUS_LABELS: Record<string, string> = {
+    "Finished Airing": "Finalizado",
+    "Currently Airing": "Em exibição",
+    "Not yet aired": "Ainda não estreou",
+};
 
 interface JikanAnimeResponse {
     data: JikanAnime[];
@@ -38,6 +50,12 @@ function normalizeAnime(anime: JikanAnime): Media {
         image: anime.images.jpg.large_image_url || anime.images.jpg.image_url,
         rating: anime.score ?? 0,
         type: "anime",
+
+        // esses dados ja vem de graca na propria listagem da Jikan
+        year: anime.year ? String(anime.year) : undefined,
+        genres: (anime.genres ?? []).map((genre) => genre.name),
+        status: anime.status ? (STATUS_LABELS[anime.status] ?? anime.status) : undefined,
+        duration: anime.episodes ? `${anime.episodes} episódios` : undefined,
     };
 }
 
@@ -49,11 +67,11 @@ export async function getAnimes(page: number, query?: string): Promise<GetAnimes
     const response = await axios<JikanAnimeResponse>({
         method: 'get',
         url: isSearching ? `${BASE_URL}/anime` : `${BASE_URL}/top/anime`,
-        timeout: 10000, // corta a espera em 10s em vez de travar o loading indefinidamente
+        timeout: 10000,
         params: {
             page,
             sfw: true, // filtra para nao pegar conteudo adulto
-            ...(isSearching ? { q: query } : {}), // <-- aqui, sem order_by/sort
+            ...(isSearching ? { q: query } : {}),
         },
     });
 

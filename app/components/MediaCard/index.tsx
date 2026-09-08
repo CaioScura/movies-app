@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Media } from "@/app/types/media";
 import StarRating from "../StarRating";
+import MediaModal from "../MediaModal";
 import './index.scss';
 
 export interface Props {
@@ -8,6 +10,9 @@ export interface Props {
 
 export function MediaCard(props: Props) {
     const media = props.media;
+
+    // controla a exibicao do modal de detalhes desse card
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <li className="media-card">
@@ -36,12 +41,22 @@ export function MediaCard(props: Props) {
                     }
 
 
-                    <button className="btn-default">
+                    <button
+                        className="btn-default"
+                        onClick={() => setIsModalOpen(true)}
+                    >
                         Ver mais
                     </button>
 
                 </div>
             </div>
+
+            {isModalOpen &&
+                <MediaModal
+                    media={media}
+                    onClose={() => setIsModalOpen(false)}
+                />
+            }
         </li>
     );
 }
